@@ -147,8 +147,9 @@ var GrepoBot =
         });
 
         clearInterval(this.config["interval"]);
+
+        var waitingTime = getRandom(310000, 360000);
         this.config["interval"] = setInterval(function () {
-            var waitingTime = getRandom(310000, 360000);
             self.claim();
             timer(waitingTime);
         }, waitingTime);
@@ -410,8 +411,9 @@ var GrepoBot =
                 this.claim();
 
                 clearInterval(this.config["interval"]);
+
+                var waitingTime = getRandom(310000, 360000);
                 this.config["interval"] = setInterval(function () {
-                    var waitingTime = getRandom(310000, 360000);
                     this.GrepoBot.claim();
                     timer(waitingTime);
                 }, waitingTime);
