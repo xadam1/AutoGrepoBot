@@ -10,14 +10,14 @@ var GrepoBot =
         interval: 0,
         lang: Game.market_id,
         timeout: 3000,
-        version: "1.0.1"
+        version: "1.0"
     },
 
     message:
     {
         en:
         {
-            LOADED_SUCCESSFULLY: `GrepoBot v ${config.version} loaded!`,
+            LOADED_SUCCESSFULLY: "GrepoBot v " + config.version + " loaded!",
 
             CAPTCHA: "A CAPTCHA has just been discovered, stop the bot.",
             CAPTAIN_IS_NOT_ACTIVE: "Captain is currently not activated!",
