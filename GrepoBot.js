@@ -5,7 +5,7 @@ var GrepoBot =
         activated: false,
         claimed: 0,
         debug: true,
-        domain: "https://raw.githubusercontent.com/xadam1/AutoGrepoBot/master/",
+        domain: "https://gitcdn.link/repo/xadam1/AutoGrepoBot/master/",
         repoDomain: "https://github.com/xadam1/autogrepobot/",
         interval: 0,
         lang: Game.market_id,
@@ -17,7 +17,7 @@ var GrepoBot =
     {
         en:
         {
-            LOADED_SUCCESSFULLY: "GrepoBot v " + config.version + " loaded!",
+            LOADED_SUCCESSFULLY: "GrepoBot v " + this.config.version + " loaded!",
 
             CAPTCHA: "A CAPTCHA has just been discovered, stop the bot.",
             CAPTAIN_IS_NOT_ACTIVE: "Captain is currently not activated!",
