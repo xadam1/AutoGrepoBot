@@ -5,8 +5,8 @@ var GrepoBot =
         activated: false,
         claimed: 0,
         debug: true,
-        domain: "https://xadam1.github.io/grepobot/",
-        repoDomain: "https://github.com/xadam1/xadam1.github.io/tree/master/grepobot/",
+        domain: "https://xadam1.github.io/ServeAutoGrepoBot/",
+        repoDomain: "https://github.com/xadam1/autogrepobot/",
         interval: 0,
         lang: Game.market_id,
         timeout: 3000,
@@ -221,7 +221,7 @@ var GrepoBot =
         var self = this;
         $(".ui_quickbar .left").append($("<div>",
             {
-                class: "lfog",
+                class: "autogrepo",
                 click: function () {
                     if (self.config.activated) {
                         $(this).empty().append(off);
@@ -235,7 +235,7 @@ var GrepoBot =
 
         $(".ui_quickbar .left").append($("<div>",
             {
-                class: "lfog",
+                class: "autogrepo",
                 click: function () {
                     Layout.buildingWindow.open("main");
                 }
@@ -243,7 +243,7 @@ var GrepoBot =
 
         $(".ui_quickbar .left").append($("<div>",
             {
-                class: "lfog",
+                class: "autogrepo",
                 click: function () {
                     // TODO PREMIUM CHECK
                     Layout.wnd.Create(Layout.wnd.TYPE_FARM_TOWN_OVERVIEWS, "FarmTowns");
@@ -252,7 +252,7 @@ var GrepoBot =
 
         $(".ui_quickbar .left").append($("<div>",
             {
-                class: "lfog",
+                class: "autogrepo",
                 click: function () {
                     Layout.buildingWindow.open("academy");
                 }
@@ -260,7 +260,7 @@ var GrepoBot =
 
         $(".ui_quickbar .right").append($("<div>",
             {
-                class: "lfog"
+                class: "autogrepo"
             }).html("Powered by GrepoBot (v. " + this.config.version + ")"));
     },
 
@@ -373,20 +373,6 @@ var GrepoBot =
 
         parameters.nlreq_id = Game.notification_last_requested_id;
         this.loader[method](controller, action, parameters, false, object, module);
-    },
-
-    sendResources: function (json) {
-        jQuery.each(this.towns[json.town_id].villages, function (k, village) {
-            if (village.level < 5) {
-                json.target_id = village.id;
-                return false;
-            }
-        });
-
-        this.request("farm_town_info", "send_resources", json, "post", function (wnd, response) {
-            console.log(response);
-        }, null);
-        console.log("LFoG: Trying to send %s of wood, %s of stone and %s of iron", json.wood, json.stone, json.iron);
     },
 
     storeIronIntoTheCave: function (town_id, amount) {
