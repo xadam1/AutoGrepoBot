@@ -5,12 +5,12 @@ var GrepoBot =
         activated: false,
         claimed: 0,
         debug: true,
-        domain: "https://xadam1.github.io/ServeAutoGrepoBot/",
+        domain: "https://raw.githubusercontent.com/xadam1/AutoGrepoBot/master/",
         repoDomain: "https://github.com/xadam1/autogrepobot/",
         interval: 0,
         lang: Game.market_id,
         timeout: 3000,
-        version: "1.0"
+        version: "1.1"
     },
 
     message:
