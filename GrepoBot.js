@@ -17,7 +17,7 @@ var GrepoBot =
     {
         en:
         {
-            LOADED_SUCCESSFULLY: "GrepoBot v " + GrepoBot.config.version + " loaded!",
+            LOADED_SUCCESSFULLY: "GrepoBot v.1.1 loaded!",
 
             CAPTCHA: "A CAPTCHA has just been discovered, stop the bot.",
             CAPTAIN_IS_NOT_ACTIVE: "Captain is currently not activated!",
