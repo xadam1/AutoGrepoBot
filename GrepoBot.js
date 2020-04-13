@@ -6,7 +6,7 @@ var GrepoBot =
         claimed: 0,
         debug: true,
         domain: "",
-        repoDomain: "https://cdn.jsdelivr.net/gh/xadam1/AutoGrepoBot@master/",
+        repoDomain: "https://github.com/xadam1/autogrepobot/",
         interval: 0,
         lang: Game.market_id,
         timeout: 3000,
@@ -189,7 +189,8 @@ var GrepoBot =
             {
                 rel: "stylesheet",
                 type: "text/css",
-                href: this.config.domain + "GrepoBot.css"
+                //href: this.config.domain + "GrepoBot.css"
+                href: "https://cdn.jsdelivr.net/gh/xadam1/AutoGrepoBot@305dbcf/GrepoBot.css"
             }));
 
         this.premium = Game.premium_features;
