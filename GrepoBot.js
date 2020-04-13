@@ -93,9 +93,6 @@ var GrepoBot =
                         if (hide == 10 || hide * 1000 - ITowns.getTown(town.id).getEspionageStorage() < 2 * min) {
                             self.storeIronIntoTheCave(town.id, 2 * min);
                         }
-                        else {
-                            json.iron = 2 * min;
-                        }
                     }
 
                     // CAPTAIN ACTIVE
@@ -151,8 +148,10 @@ var GrepoBot =
 
         clearInterval(this.config["interval"]);
         this.config["interval"] = setInterval(function () {
+            var waitingTime = getRandom(310000, 360000);
             self.claim();
-        }, getRandom(310000, 360000));
+            timer(waitingTime);
+        }, waitingTime);
     },
 
     isPremiumActive: function (service) {
@@ -406,13 +405,15 @@ var GrepoBot =
 
     switchState: function () {
         if (!this.config["activated"]) {
-            if ((new Date - this.config["claimed"]) > 300000) {
+            if ((new Date - this.config["claimed"]) > 600000) {
                 this.claim();
 
                 clearInterval(this.config["interval"]);
                 this.config["interval"] = setInterval(function () {
+                    var waitingTime = getRandom(310000, 360000);
                     this.GrepoBot.claim();
-                }, getRandom(310000, 360000));
+                    timer(waitingTime);
+                }, waitingTime);
             }
         }
         else {
@@ -432,14 +433,26 @@ setTimeout(function () {
         var waitingTime = getRandom(610000, 660000)
         GrepoBot.config.interval = setInterval(function () {
             GrepoBot.claim();
-
-
+            timer(waitingTime)
         }, waitingTime);
     }
 }, GrepoBot.config.timeout);
 
+
 async function timer(waitingTime) {
+    var time = waitingTime / 1000
+
     setInterval(function () {
-        $(".ui_quickbar .right .autogrepo")[0]
-    })
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        $(".ui_quickbar .right .autogrepo-timer")[0].innerHTML = "Timer: " + minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
 }
