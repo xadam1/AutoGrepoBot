@@ -261,6 +261,11 @@ var GrepoBot =
         $(".ui_quickbar .right").append($("<div>",
             {
                 class: "autogrepo"
+            }).html("TimerToNextFarm: MM:SS"));
+
+        $(".ui_quickbar .right").append($("<div>",
+            {
+                class: "autogrepo"
             }).html("Powered by GrepoBot (v. " + this.config.version + ")"));
     },
 
