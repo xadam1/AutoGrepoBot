@@ -440,19 +440,19 @@ setTimeout(function () {
 
 
 async function timer(waitingTime) {
-    var time = waitingTime / 1000
+    var time = waitingTime / 1000       // in seconds
 
     setInterval(function () {
-        minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
+        minutes = parseInt(time / 60, 10);
+        seconds = parseInt(time % 60, 10);
 
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
         $(".ui_quickbar .right .autogrepo-timer")[0].innerHTML = "Timer: " + minutes + ":" + seconds;
 
-        if (--timer < 0) {
-            timer = duration;
+        if (--time < 0) {
+            time = duration;
         }
     }, 1000);
 }
