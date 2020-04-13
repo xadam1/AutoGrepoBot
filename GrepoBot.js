@@ -260,7 +260,7 @@ var GrepoBot =
 
         $(".ui_quickbar .right").append($("<div>",
             {
-                class: "autogrepo"
+                class: "autogrepo-timer"
             }).html("TimerToNextFarm: MM:SS"));
 
         $(".ui_quickbar .right").append($("<div>",
@@ -429,8 +429,17 @@ function getRandom(a, b) {
 setTimeout(function () {
     GrepoBot.load();
     if (GrepoBot.config.activated) {
+        var waitingTime = getRandom(610000, 660000)
         GrepoBot.config.interval = setInterval(function () {
             GrepoBot.claim();
-        }, getRandom(310000, 360000));
+
+
+        }, waitingTime);
     }
 }, GrepoBot.config.timeout);
+
+async function timer(waitingTime) {
+    setInterval(function () {
+        $(".ui_quickbar .right .autogrepo")[0]
+    })
+}
