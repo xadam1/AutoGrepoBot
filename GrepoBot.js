@@ -149,7 +149,7 @@ var GrepoBot =
 
         clearInterval(this.config["interval"]);
 
-        var waitingTime = getRandom(310000, 360000);
+        var waitingTime = getRandom(610000, 660000);
         this.config["interval"] = setInterval(function () {
             self.claim();
             timer(waitingTime);
@@ -265,7 +265,7 @@ var GrepoBot =
         $(".ui_quickbar .right").append($("<div>",
             {
                 id: "timer",
-                class: "autogrepo"
+                class: "autogrepo-timer"
             }).html("TimerToNextFarm: MM:SS"));
 
         $(".ui_quickbar .right").append($("<div>",
@@ -437,6 +437,7 @@ function getRandom(a, b) {
 }
 
 function resetTimer() {
+    clearInterval(GrepoBot.config.timerID);
     $(".ui_quickbar .right .autogrepo-timer")[0].innerHTML = "Bot is farming...";
 }
 
@@ -455,7 +456,6 @@ async function timer(waitingTime) {
 
         if (--time < 0) {
             // stop the timer and reset UI
-            clearInterval(GrepoBot.config.timerID);
             resetTimer();
         }
     }, 1000);
