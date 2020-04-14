@@ -4,6 +4,7 @@ var GrepoBot =
     {
         activated: false,
         claimed: 0,
+        timerID: 0,
         debug: true,
         domain: "",
         repoDomain: "https://github.com/xadam1/autogrepobot/",
@@ -155,6 +156,7 @@ var GrepoBot =
         }, waitingTime);
     },
 
+
     isPremiumActive: function (service) {
         switch (service) {
             case "curator":
@@ -173,6 +175,7 @@ var GrepoBot =
                 return (this.premium.trader > Timestamp.now());
         }
     },
+
 
     load: function () {
         this.loader = new GPAjax(Layout, false);
@@ -261,11 +264,13 @@ var GrepoBot =
 
         $(".ui_quickbar .right").append($("<div>",
             {
-                class: "autogrepo-timer"
+                id: "timer",
+                class: "autogrepo"
             }).html("TimerToNextFarm: MM:SS"));
 
         $(".ui_quickbar .right").append($("<div>",
             {
+                id: "footer",
                 class: "autogrepo"
             }).html("Powered by GrepoBot (v. " + this.config.version + ")"));
     },
@@ -421,6 +426,7 @@ var GrepoBot =
         }
         else {
             clearInterval(this.config["interval"]);
+            $(".ui_quickbar .right .autogrepo-timer")[0].innerHTML = "Timer: PAUSED";
         }
         this.config["activated"] = !this.config["activated"];
     },
@@ -430,32 +436,33 @@ function getRandom(a, b) {
     return Math.floor(Math.random() * (b - a + 1)) + a;
 }
 
-setTimeout(function () {
-    GrepoBot.load();
-    if (GrepoBot.config.activated) {
-        var waitingTime = getRandom(610000, 660000)
-        GrepoBot.config.interval = setInterval(function () {
-            GrepoBot.claim();
-            timer(waitingTime)
-        }, waitingTime);
-    }
-}, GrepoBot.config.timeout);
-
+function resetTimer() {
+    $(".ui_quickbar .right .autogrepo-timer")[0].innerHTML = "Bot is farming...";
+}
 
 async function timer(waitingTime) {
-    var time = waitingTime / 1000       // in seconds
+    // get time in seconds
+    var time = floor(waitingTime / 1000)
 
-    setInterval(function () {
+    GrepoBot.config.timerID = setInterval(function () {
         minutes = parseInt(time / 60, 10);
         seconds = parseInt(time % 60, 10);
 
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
-        $(".ui_quickbar .right .autogrepo-timer")[0].innerHTML = "Timer: " + minutes + ":" + seconds;
+        $(".ui_quickbar .right .autogrepo-timer")[0].innerHTML = "Time Until Next Farming: " + minutes + ":" + seconds;
 
         if (--time < 0) {
-            time = duration;
+            // stop the timer and reset UI
+            clearInterval(GrepoBot.config.timerID);
+            resetTimer();
         }
     }, 1000);
 }
+
+
+// INIT
+setTimeout(function () {
+    GrepoBot.load();
+}, GrepoBot.config.timeout);
