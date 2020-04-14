@@ -11,6 +11,7 @@ var GrepoBot =
         interval: 0,
         lang: Game.market_id,
         timeout: 3000,
+        timeoutBetweenTowns = 0,
         version: "1.1"
     },
 
@@ -50,7 +51,9 @@ var GrepoBot =
     },
 
     claim: function () {
-        var self = this, timeoutBetweenTowns = 0;
+        var self = this;
+        this.config.timeoutBetweenTowns = getRandom(3000, 5000);
+
         jQuery.each(this.towns, function (key, town) {
             if (town.villages.length > 0) {
                 // Checks if tow in full
@@ -143,17 +146,9 @@ var GrepoBot =
                             }, timeoutBetweenVillages += getRandom(500, 750));
                         });
                     }
-                }, timeoutBetweenTowns += getRandom(6000, 8000));
+                }, timeoutBetweenTowns);
             }
         });
-
-        clearInterval(this.config["interval"]);
-
-        var waitingTime = getRandom(610000, 660000);
-        this.config["interval"] = setInterval(function () {
-            self.claim();
-            timer(waitingTime);
-        }, waitingTime);
     },
 
 
@@ -412,24 +407,37 @@ var GrepoBot =
 
     switchState: function () {
         if (!this.config["activated"]) {
-            if ((new Date - this.config["claimed"]) > 600000) {
-                this.claim();
-
-                clearInterval(this.config["interval"]);
-
-                var waitingTime = getRandom(310000, 360000);
-                this.config["interval"] = setInterval(function () {
-                    this.GrepoBot.claim();
-                    timer(waitingTime);
-                }, waitingTime);
+            // BOT IS BEING SWITCHED ON
+            if ((Date.now() - this.config["claimed"]) > 600000) {
+                // Claimed more than 10 mins ago
+                this.handleClaim();
+            }
+            else {
+                // Wait till villages are ready (10 mins)
+                setTimeout(this.handleClaim, Date.now() - this.config.claimed);
             }
         }
         else {
+            // BOT IS BEING SWITCHED OFF
             clearInterval(this.config["interval"]);
             $(".ui_quickbar .right .autogrepo-timer")[0].innerHTML = "Timer: PAUSED";
         }
         this.config["activated"] = !this.config["activated"];
     },
+
+    handleClaim: function () {
+        this.config.interval = setInterval(function () {
+            this.claim();
+            this.config.claimed = Date.now();
+
+            var waitingTime = getRandom(610000, 660000);
+            this.config["interval"] = setInterval(function () {
+                this.GrepoBot.claim();
+                timer(waitingTime);
+            }, waitingTime);
+
+        })
+    }
 };
 
 function getRandom(a, b) {
